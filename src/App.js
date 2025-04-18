@@ -1,9 +1,9 @@
 //App.js
 
 import axios from 'axios';
-import CoordinateConverter from "./calculations/coordinates"
-import ZuluTimeCalculator from './calculations/zuluTimeCalculator';
-import JDayCalculator from './calculations/jdayCalculator';
+import CoordinateConverter from "./calcalutorComponents/coordinates"
+import ZuluTimeCalculator from './calcalutorComponents/zuluTimeCalculator';
+import JDayCalculator from './calcalutorComponents/jdayCalculator';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Select, MenuItem } from '@mui/material';
 import {  LocalizationProvider} from '@mui/x-date-pickers';
