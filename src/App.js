@@ -4,6 +4,7 @@ import axios from 'axios';
 import CoordinateConverter from "./calcalutorComponents/coordinates"
 import ZuluTimeCalculator from './calcalutorComponents/zuluTimeCalculator';
 import JDayCalculator from './calcalutorComponents/jdayCalculator';
+import RadarEquation from './calcalutorComponents/radarEq';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Select, MenuItem } from '@mui/material';
 import {  LocalizationProvider} from '@mui/x-date-pickers';
@@ -43,7 +44,7 @@ function SelectFeature(props){
       <MenuItem value={"jday"}>JDayCalculator</MenuItem>
       <MenuItem value={"zulu"}>Zulu Time Converter</MenuItem>
       <MenuItem value={"dms2dec"}>Lat Long Converter</MenuItem>
-      {/* <MenuItem value={30}>Thirty</MenuItem> */}
+      <MenuItem value={'radarEq'}>Radar Equation</MenuItem>
     </Select>
     </div>
   );
@@ -62,6 +63,8 @@ function getCalculator(currSelected){
       return <ZuluTimeCalculator/>
     case "dms2dec":
       return <CoordinateConverter/>;
+    case "radarEq":
+      return <RadarEquation/>;
     default:
       return null
   }
