@@ -48,23 +48,26 @@ function InputSlider({paramName, value, setValue}) {
 }
 
 function RadarEquation(){
-    const [powerTransmit, setPowerTransmit] = React.useState(0);
-    const [gainTransmit, setGainTransmit] = React.useState(0);
-    const [range, setRange] = React.useState(0);
-    const [RCS, setRCS] = React.useState(0);
+    const [powerTransmit, setPowerTransmit] = React.useState(1);
+    const [gainTransmit, setGainTransmit] = React.useState(40);
+    const [range, setRange] = React.useState(100);
+    const [RCS, setRCS] = React.useState(1);
+    const [frequency, setFrequency] = React.useState(400);
     const [powerAtRadar, setPowerAtRadar] = React.useState(0);
-    const [affectiveReceiverArea, setAffectiveReceiverArea] = React.useState(0);
+    // const [affectiveReceiverArea, setAffectiveReceiverArea] = React.useState(0);
 
     const dBToLin = (db) => {return Math.pow(10, (db/ 10))}
 
     React.useEffect(
         ()=>{
-            const freeSpaceLoss = (4 * Math.PI * range * range);
+            const freeSpaceLoss = (4 * Math.PI * ((range * 1000)**2));
             const powerAtTarget = ((powerTransmit * dBToLin(gainTransmit)) / freeSpaceLoss) * RCS;
+            const wavelength =  299792458 / (frequency*(10**6));
+            const affectiveReceiverArea = (wavelength*wavelength*dBToLin(gainTransmit))/(4*Math.PI);
             const powerAtRecv = affectiveReceiverArea / freeSpaceLoss;
             setPowerAtRadar(powerAtTarget*powerAtRecv)
         },
-        [powerTransmit, gainTransmit, range, RCS]
+        [powerTransmit, gainTransmit, range, RCS, frequency]
     )
 
     const identity = (val)=> val;
@@ -76,7 +79,8 @@ function RadarEquation(){
             <InputSlider paramName={<p>G<sub>t</sub> (dB)</p> }  value={gainTransmit} setValue={setGainTransmit}/>
             <InputSlider paramName={<p>R (km)</p>}  value={range} setValue={setRange}/>
             <InputSlider paramName={<p>RCS (m<sup>2</sup>)</p>}  value={RCS} setValue={setRCS}/>
-            <InputSlider paramName={<p>A<sub>e</sub> (m<sup>2</sup>)</p>} value={affectiveReceiverArea} setValue={setAffectiveReceiverArea}/>
+            <InputSlider paramName={<p> Frequency (MHz)</p>} value={frequency} setValue={setFrequency}/>
+
             <Typography>
                 <p>Power At Radar (W): {powerAtRadar}</p>
             </Typography>
